@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="/models/homePage.css">
+    <title>Home Page</title>
+    <script>
+        window.onload = function () {
+            if (!window.location.hash) {
+                window.location = window.location + '#loaded';
+                window.location.reload();
+            }
+        }
+    </script>
+</head>
+
+<body on="refresh()">
+
+    <form action="homePage.html" method="POST">
+        <input id="date" type="datetime-local" name="firstDate">
+        <input id="date" type="datetime-local" name="secondDate">
+        <label for="adi">car1/car2: </label>
+        <input type="text" id="carName" name="carName" required="required" />
+        <input id="button" type="submit" value="Search" name="button">
+    </form>
+
+    <form action="/logout" method="POST">
+        <input id="logout" type="submit" value="Logout" name="logout">
+    </form>
+
+    <div id="map"></div>
+
+    <script>
+        var marker, options, map, first, second;
+        var array = [], i = 0;
+
+        //get car id from database
+        function getId(response) {
+            first = response.id1;
+            second = response.id2;
+        }
+
+        //Get data from database
+        function getData(informations) {
+
+            informations.forEach(data => {
+
+                array[i] = data;
+                i = i + 1;
+            });
+        }
+
+        //Google maps settings
+        function initMap() {
+
+            var firstLocArray = [], secondLocArray = [];
+            const iconBase = "https://developers.google.com/maps/documentation/javascript/examples/full/images/parking_lot_maps.png";
+
+            options = {
+                zoom: 20,
+                center: { lat: array.at(0).locX, lng: array.at(0).locY }
+            }
+
+            map = new google.maps.Map(document.getElementById('map'), options);
+
+            array.forEach(data => {
+                console.log(first);
+                console.log(second);
+                if (data.id == first) firstLocArray.push(data);
+                if (data.id == second) secondLocArray.push(data);
+            });
+
+            if (firstLocArray.length > 0) {
+
+                firstLocArray.forEach(data => {
+
+                    marker = new google.maps.Marker({
+                        position: { lat: data.locX, lng: data.locY },
+                        icon: iconBase,
+                        map: map,
+                    });
+                });
+            }
+
+            if (secondLocArray.length > 0) {
+
+                secondLocArray.forEach(data => {
+
+                    marker = new google.maps.Marker({
+                        position: { lat: data.locX, lng: data.locY },
+                        map: map,
+                    });
+                })
+            }
+
+            firstLocArray = [];
+            secondLocArray = [];
+
+            /*array.forEach(data => {
+                console.log(data);
+                if (data.id == 1) {
+                    marker = new google.maps.Marker({
+                        position: { lat: data.locX, lng: data.locY },
+                        icon: iconBase,
+                        map: map,
+                    });
+                }
+                if (data.id == 2) {
+                    marker = new google.maps.Marker({
+                        position: { lat: data.locX, lng: data.locY },
+                        map: map,
+                    });
+                }
+ 
+            });*/
+
+        }
+
+    </script>
+
+    <script src="/id?callback=getId"></script>
+    <script src="/data?callback=getData"></script>
+
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAqmTfNq9FtXVxV0Dl8LGDLge15ab1Oczk&callback=initMap&libraries=&v=weekly"></script>
+
+</body>
+
+</html>

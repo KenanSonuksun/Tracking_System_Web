@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/models/homePage.css">
+    <title>Road Page</title>
+    <script>
+        window.onload = function () {
+            if (!window.location.hash) {
+                window.location = window.location + '#loaded';
+                window.location.reload();
+            }
+        }
+    </script>
+</head>
+
+<body>
+
+    <div id="map"></div>
+
+    <script>
+        var marker, options, map;
+        var array = [], i = 0;
+
+        function getData2(informations) {
+            informations.forEach(data => {
+
+                array[i] = data;
+                i = i + 1;
+            });
+        }
+
+        function initMap() {
+
+            /*options = {
+                zoom: 20,
+                center: { lat: array.at(0).locX, lng: array.at(0).locY }
+            }
+
+            map = new google.maps.Map(document.getElementById('map'), options);
+
+            array.forEach(data => {
+
+                console.log(data);
+                marker = new google.maps.Marker({
+                    position: { lat: data.locX, lng: data.locY },
+                    map: map,
+                });
+            });*/
+
+
+            var firstLocArray = []
+
+            options = {
+                zoom: 20,
+                center: { lat: array.at(0).locX, lng: array.at(0).locY }
+            }
+
+            map = new google.maps.Map(document.getElementById('map'), options);
+
+            array.forEach(data => {
+
+                firstLocArray.push(data);
+            });
+
+            if (firstLocArray.length > 0) {
+
+                firstLocArray.forEach(data => {
+                    console.log(data);
+                    marker = new google.maps.Marker({
+
+                        position: { lat: data.locX, lng: data.locY },
+                        map: map,
+                    });
+                });
+
+            }
+
+            firstLocArray.length = 0;
+        }
+    </script>
+
+    <script src="/data2?callback=getData2"></script>
+
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDyozPmBw8rnulH9c2q6okNUauM_FszPpA&callback=initMap&libraries=&v=weekly"></script>
+
+</body>
+
+</html>
