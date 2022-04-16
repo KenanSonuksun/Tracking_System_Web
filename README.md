@@ -6,11 +6,16 @@
  <br><br>
 A multi-layered web application has been developed course project. This project has been met the real-world needs of our students in the following areas:
 It is aimed to gain the ability to apply and take into account.
+<br><br>
 • Using the Pattern, Landscape/Interface and Management (Model, View, Controller) pattern (Parsing Interface, Operation Logic and Data)
+<br><br>
 • Dependencies between software functional parts using a message broker
 reduction
+<br><br>
 • Creating solutions using a distributed system architecture
+<br><br>
 • Learning and implementing an up-to-date web library infrastructure.
+<br><br>
 • Using different types of databases and database design
  <br><br>
  
