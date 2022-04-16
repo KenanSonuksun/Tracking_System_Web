@@ -19,6 +19,8 @@ reduction
 • Using different types of databases and database design
  <br><br>
  
+Google Map has been removed informations because of security.
+ 
 Thank you for taking your time to read. You can contact me from my accounts below.<br>
 <br>
 
